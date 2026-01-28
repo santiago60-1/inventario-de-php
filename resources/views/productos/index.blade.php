@@ -4,181 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Productos</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-        header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        header h1 {
-            font-size: 1.5rem;
-        }
-        nav {
-            background-color: #34495e;
-            padding: 0;
-        }
-        nav ul {
-            list-style: none;
-            display: flex;
-            margin: 0;
-            padding: 0;
-        }
-        nav li {
-            margin: 0;
-        }
-        nav a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            padding: 1rem 1.5rem;
-            transition: background-color 0.3s;
-        }
-        nav a:hover {
-            background-color: #2c3e50;
-        }
-        main {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid #e74c3c;
-            padding-bottom: 0.5rem;
-        }
-        .btn-container {
-            margin-bottom: 2rem;
-        }
-        a.btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            text-decoration: none;
-            display: inline-block;
-            transition: background-color 0.3s;
-            font-weight: 500;
-        }
-        a.btn-success {
-            background-color: #27ae60;
-            color: white;
-        }
-        a.btn-success:hover {
-            background-color: #229954;
-        }
-        a.btn-info {
-            background-color: #3498db;
-            color: white;
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-        }
-        a.btn-info:hover {
-            background-color: #2980b9;
-        }
-        a.btn-danger {
-            background-color: #e74c3c;
-            color: white;
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-        }
-        a.btn-danger:hover {
-            background-color: #c0392b;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-        }
-        table th {
-            background-color: #34495e;
-            color: white;
-            padding: 1rem;
-            text-align: left;
-        }
-        table td {
-            padding: 1rem;
-            border-bottom: 1px solid #ecf0f1;
-        }
-        table tr:hover {
-            background-color: #ecf0f1;
-        }
-        .action-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-    </style>
+    @vite('resources/css/app.css')
 </head>
-<body>
-    <header>
-        <h1>📦 Sistema de Inventario</h1>
+
+<body class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 p-6 lg:p-8">
+
+    <!-- HEADER -->
+    <header class="font-semibold text-xl text-gray-800 leading-tight">
+        <div class="max-w-7xl mx-auto">
+            <h1 class="text-4xl font-bold">📦 Sistema de Inventario</h1>
+        </div>
     </header>
 
-    <nav>
-        <ul>
-            <li><a href="{{ route('productos.index') }}">Inicio</a></li>
-            <li><a href="{{ route('productos.show') }}">Ver Productos</a></li>
-            <li><a href="{{ route('productos.create') }}">Crear Producto</a></li>
-        </ul>
+    <!-- NAV -->
+    <nav class="bg-slate-700 shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto">
+            <ul class="flex">
+                <li>
+                    <a href="{{ route('home.index') }}"
+                       class="block px-6 py-4 text-white hover:bg-slate-600 transition-colors font-medium">
+                        Inicio
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('productos.index') }}"
+                       class="block px-6 py-4 text-white hover:bg-slate-600 transition-colors font-medium">
+                        Ver Productos
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('productos.create') }}"
+                       class="block px-6 py-4 text-white hover:bg-slate-600 transition-colors font-medium">
+                        Crear Producto
+                    </a>
+                </li>
+            </ul>
+        </div>
     </nav>
 
-    <main>
-        <h1>Lista de Productos</h1>
+    <!-- MAIN -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-1">
+        <h1 class="text-3xl font-bold mb-6 border-b-4 border-red-500 pb-4">Lista de Productos</h1>
 
-        <div class="btn-container">
-            <a href="{{ route('productos.create') }}" class="btn btn-success">Agregar Producto</a>
+        <!-- BOTÓN AGREGAR -->
+        <div class="mb-6">
+            <a href="{{ route('productos.create') }}"
+               class="inline-block bg-green-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-700 transition font-medium">
+                ➕ Agregar Producto
+            </a>
         </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre del Producto</th>
-                    <th style="text-align: center;">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Producto 1</td>
-                    <td>
-                        <div class="action-buttons" style="justify-content: center;">
-                            <a href="{{ route('productos.edit') }}" class="btn btn-info">Editar</a>
-                            <a href="{{ route('productos.destroy', 1) }}" class="btn btn-danger" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Producto 2</td>
-                    <td>
-                        <div class="action-buttons" style="justify-content: center;">
-                            <a href="{{ route('productos.edit') }}" class="btn btn-info">Editar</a>
-                            <a href="{{ route('productos.destroy', 2) }}" class="btn btn-danger" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Producto 3</td>
-                    <td>
-                        <div class="action-buttons" style="justify-content: center;">
-                            <a href="{{ route('productos.edit') }}" class="btn btn-info">Editar</a>
-                            <a href="{{ route('productos.destroy', 3) }}" class="btn btn-danger" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <!-- TABLA -->
+        <div class="overflow-x-auto bg-white rounded-lg shadow-lg">
+            <table class="min-w-full border border-gray-200">
+                <thead class="bg-slate-100">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-sm font-semibold text-slate-800">ID</th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold text-slate-800">Nombre</th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold text-slate-800">Descripción</th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold text-slate-800">Precio</th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold text-slate-800">Cantidad</th>
+                        <th class="px-4 py-3 text-center text-sm font-semibold text-slate-800">Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y">
+                    @forelse($productos as $producto)
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="px-4 py-3 font-medium">{{ $producto->id }}</td>
+                            <td class="px-4 py-3 font-medium">{{ $producto->nombre }}</td>
+                            <td class="px-4 py-3 text-gray-600">
+                                {{ Str::limit($producto->descripcion, 50) }}
+                            </td>
+                            <td class="px-4 py-3 font-semibold text-green-600">
+                                ${{ number_format($producto->precio, 2) }}
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <span class="inline-block bg-slate-100 px-3 py-1 rounded font-medium text-slate-800">{{ $producto->cantidad }}</span>
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="flex justify-center gap-2 flex-wrap">
+                                    <a href="{{ route('productos.show', $producto->id) }}"
+                                       class="bg-purple-500 text-white px-3 py-2 rounded-md hover:bg-purple-600 transition font-medium text-sm">
+                                        👁️ Ver
+                                    </a>
+
+                                    <a href="{{ route('productos.edit', $producto->id) }}"
+                                       class="bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600 transition font-medium text-sm">
+                                        ✏️ Editar
+                                    </a>
+
+                                    <form action="{{ route('productos.destroy', $producto->id) }}"
+                                          method="POST"
+                                          class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                                onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?')"
+                                                class="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600 transition font-medium text-sm">
+                                            🗑️ Eliminar
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6"
+                                class="text-center py-12 text-gray-500">
+                                <p class="text-lg mb-4">No hay productos disponibles.</p>
+                                <a href="{{ route('productos.create') }}"
+                                   class="inline-block bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition font-medium">
+                                    ➕ Crear uno
+                                </a>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Paginación -->
+        @if($paginator->hasPages())
+            <div class="mt-8 flex justify-center">
+                {{ $paginator->links('pagination::tailwind') }}
+            </div>
+        @endif
     </main>
-</body>
-</html>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-white text-center py-6 mt-12">
+        <p class="mb-2">&copy; 2026 Sistema de Inventario - Todos los derechos reservados</p>
+        <p class="text-sm text-gray-400">Desarrollado con Laravel y Tailwind CSS</p>
+    </footer>

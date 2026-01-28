@@ -4,144 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Producto</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-        header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 1rem 2rem;
-        }
-        nav {
-            background-color: #34495e;
-        }
-        nav ul {
-            list-style: none;
-            display: flex;
-            margin: 0;
-            padding: 0;
-        }
-        nav a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            padding: 1rem 1.5rem;
-            transition: background-color 0.3s;
-        }
-        nav a:hover {
-            background-color: #2c3e50;
-        }
-        main {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid #e74c3c;
-            padding-bottom: 0.5rem;
-        }
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: #2c3e50;
-        }
-        input, textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #bdc3c7;
-            border-radius: 4px;
-            font-size: 1rem;
-            font-family: inherit;
-        }
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #e74c3c;
-            box-shadow: 0 0 5px rgba(231, 76, 60, 0.5);
-        }
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            margin-right: 0.5rem;
-        }
-        .btn-success {
-            background-color: #27ae60;
-            color: white;
-        }
-        .btn-success:hover {
-            background-color: #229954;
-        }
-        .btn-secondary {
-            background-color: #95a5a6;
-            color: white;
-        }
-        .btn-secondary:hover {
-            background-color: #7f8c8d;
-        }
-    </style>
+    @vite('resources/css/app.css')
 </head>
-<body>
-    <header>
-        <h1>📦 Sistema de Inventario</h1>
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+    <!-- HEADER -->
+    <header class="bg-gradient-to-r from-slate-800 to-slate-900 text-white py-6 px-6 shadow-lg">
+        <div class="max-w-7xl mx-auto">
+            <h1 class="text-4xl font-bold">📦 Sistema de Inventario</h1>
+        </div>
     </header>
 
-    <nav>
-        <ul>
-            <li><a href="{{ route('productos.index') }}">Inicio</a></li>
-            <li><a href="{{ route('productos.show') }}">Ver Productos</a></li>
-            <li><a href="{{ route('productos.create') }}">Crear Producto</a></li>
-        </ul>
+    <!-- NAV -->
+    <nav class="bg-slate-700 shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto">
+            <ul class="flex">
+                <li>
+                    <a href="{{ route('home.index') }}"
+                       class="block px-6 py-4 text-white hover:bg-slate-600 transition-colors font-medium">
+                        Inicio
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('productos.index') }}"
+                       class="block px-6 py-4 text-white hover:bg-slate-600 transition-colors font-medium">
+                        Ver Productos
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('productos.create') }}"
+                       class="block px-6 py-4 text-white hover:bg-slate-600 transition-colors font-medium">
+                        Crear Producto
+                    </a>
+                </li>
+            </ul>
+        </div>
     </nav>
 
-    <main>
-        <h1>Formulario para crear un producto</h1>
+    <!-- MAIN -->
+    <main class="max-w-3xl mx-auto px-4 py-8 flex-1">
+        <h1 class="text-3xl font-bold mb-8 border-b-4 border-red-500 pb-4">
+            ➕ Formulario para crear un producto
+        </h1>
 
-        <form action="/productos/create" method="POST">
+        <!-- FORM -->
+        <form action="{{ route('productos.store') }}"
+              method="POST"
+              class="bg-white p-8 rounded-lg shadow-lg space-y-6">
             @csrf
 
-            <div class="form-group">
-                <label for="nombre">Nombre del producto:</label>
-                <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre" required>
+            <!-- NOMBRE -->
+            <div>
+                <label for="nombre" class="block font-semibold mb-2 text-slate-800">
+                    Nombre del producto
+                </label>
+                <input type="text"
+                       id="nombre"
+                       name="nombre"
+                       placeholder="Ingresa el nombre"
+                       required
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent">
             </div>
 
-            <div class="form-group">
-                <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" rows="4" placeholder="Describe el producto"></textarea>
+            <!-- DESCRIPCIÓN -->
+            <div>
+                <label for="descripcion" class="block font-semibold mb-2 text-slate-800">
+                    Descripción
+                </label>
+                <textarea id="descripcion"
+                          name="descripcion"
+                          rows="4"
+                          placeholder="Describe el producto"
+                          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"></textarea>
             </div>
 
-            <div class="form-group">
-                <label for="precio">Precio:</label>
-                <input type="number" id="precio" name="precio" step="0.01" placeholder="0.00" required>
+            <!-- PRECIO -->
+            <div>
+                <label for="precio" class="block font-semibold mb-2 text-slate-800">
+                    Precio ($)
+                </label>
+                <input type="number"
+                       id="precio"
+                       name="precio"
+                       step="0.01"
+                       placeholder="0.00"
+                       required
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent">
             </div>
 
-            <div style="margin-top: 2rem;">
-                <button type="submit" class="btn btn-success">Crear Producto</button>
-                <a href="{{ route('productos.show') }}" class="btn btn-secondary">Cancelar</a>
+            <!-- CANTIDAD -->
+            <div>
+                <label for="cantidad" class="block font-semibold mb-2 text-slate-800">
+                    Cantidad
+                </label>
+                <input type="number"
+                       id="cantidad"
+                       name="cantidad"
+                       min="0"
+                       placeholder="0"
+                       required
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent">
+            </div>
+
+            <!-- BOTONES -->
+            <div class="flex gap-4 pt-6">
+                <button type="submit"
+                        class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition font-semibold flex-1">
+                    ✅ Crear Producto
+                </button>
+
+                <a href="{{ route('productos.index') }}"
+                   class="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition font-semibold flex-1 text-center">
+                    ❌ Cancelar
+                </a>
             </div>
         </form>
     </main>
-</body>
-</html>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-white text-center py-6 mt-12">
+        <p class="mb-2">&copy; 2026 Sistema de Inventario - Todos los derechos reservados</p>
+        <p class="text-sm text-gray-400">Desarrollado con Laravel y Tailwind CSS</p>
+    </footer>

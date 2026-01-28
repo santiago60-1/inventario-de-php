@@ -4,19 +4,59 @@ use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\ProductController;
 use Illuminate\Support\Facades\Route;
 
-// Ruta principal
-Route::get('/', [HomeController::class, "Welcome"])->name("productos.index");
+/*
+|--------------------------------------------------------------------------
+| RUTAS PÚBLICAS
+|--------------------------------------------------------------------------
+*/
 
-// Rutas de productos
-Route::get('/productos', [ProductController::class, "ShowProductos"])->name('productos.show');
+// Landing / Home
+Route::get('/', [HomeController::class, 'welcome'])
+    ->name('home.index');
 
-// Crear producto
-Route::get('/productos/create', [ProductController::class, "CrearProductos"])->name("productos.create");
-Route::get('/productos/crear', [ProductController::class, "Formulario"])->name('productos.crear');
 
-// Editar producto
-Route::get('/productos/edit', [ProductController::class, "EditarProducto"])->name('productos.edit');
-Route::get('/productos/actualizar', [ProductController::class, "ShowFormularioActualizarProducto"])->name("productos.actualizar");
+/*
+|--------------------------------------------------------------------------
+| RUTAS PROTEGIDAS (JETSTREAM)
+|--------------------------------------------------------------------------
+*/
 
-// Eliminar producto
-Route::get('/producto/{id}', [ProductController::class, "BorrarProducto"])->name("productos.destroy");
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+
+    // Dashboard
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    /*
+    |--------------------------------------------------------------------------
+    | PRODUCTOS / INVENTARIO
+    |--------------------------------------------------------------------------
+    */
+
+
+    Route::get('/productos', [ProductController::class, 'index'])
+        ->name('productos.index');
+
+    Route::get('/productos/crear', [ProductController::class, 'create'])
+        ->name('productos.create');
+
+    Route::post('/productos', [ProductController::class, 'storeProducto'])
+        ->name('productos.store');
+
+    Route::get('/productos/{id}/editar', [ProductController::class, 'editarProducto'])
+        ->name('productos.edit');
+
+    Route::put('/productos/{id}', [ProductController::class, 'updateProducto'])
+        ->name('productos.update');
+
+    Route::delete('/productos/{id}', [ProductController::class, 'delete'])
+        ->name('productos.destroy');
+
+    Route::get('/productos/{id}', [ProductController::class, 'show'])
+        ->name('productos.show');
+});
