@@ -16,10 +16,6 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link href="{{ route('home.index') }}" :active="request()->routeIs('home.index')">
-                        {{ __('Inventario') }}
-                    </x-nav-link>
-
                     <x-nav-link href="{{ route('productos.index') }}" :active="request()->routeIs('productos.index')">
                         {{ __('ver productos') }}
                     </x-nav-link>

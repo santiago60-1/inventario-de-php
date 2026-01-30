@@ -12,14 +12,19 @@ class ProductService
      */
     public function getProductosForUser($user, int $perPage = 10)
     {
-        $query = Producto::query()->latest();
+        $query = Producto::query()
+            ->with('user') // 👈 para que el admin vea quién creó el producto
+            ->latest();
 
+        // SOLO el admin ve todo
         if ($user->role !== 'admin') {
             $query->where('user_id', $user->id);
         }
 
         return $query->paginate($perPage);
     }
+
+
 
     /**
      * Obtener un producto por ID
@@ -32,14 +37,14 @@ class ProductService
     /**
      * Guardar un nuevo producto desde DTO
      */
-    public function storeProducto(ProductInputDto $dto, $user): Producto
+    public function storeProducto(ProductInputDto $dto): Producto
     {
         return Producto::create([
             'nombre'      => $dto->nombre,
             'descripcion' => $dto->descripcion,
             'precio'      => $dto->precio,
             'cantidad'    => $dto->cantidad,
-            'user_id'     => $user->id, // 🔐 ownership
+            'user_id'     => auth()->id(), // 🔐 ownership
         ]);
     }
 

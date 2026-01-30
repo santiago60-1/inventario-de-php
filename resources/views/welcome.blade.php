@@ -14,16 +14,6 @@
         </div>
     </header>
 
-    <!-- Navbar -->
-    <nav class="bg-slate-700 shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto">
-            <ul class="flex">
-                <li><a href="{{ route('dashboard') }}" class="block px-6 py-4 text-white hover:bg-slate-600 transition-colors font-medium">Dashboard</a></li>
-                <li><a href="{{ route('productos.index') }}" class="block px-6 py-4 text-white hover:bg-slate-600 transition-colors font-medium">Ver Productos</a></li>
-                <li><a href="{{ route('productos.create') }}" class="block px-6 py-4 text-white hover:bg-slate-600 transition-colors font-medium">Crear Producto</a></li>
-            </ul>
-        </div>
-    </nav>
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 py-8 flex-1">
@@ -33,8 +23,8 @@
             <p class="text-lg text-gray-600 mb-8">Gestiona tus productos de forma eficiente y organizada con nuestro sistema moderno y fácil de usar.</p>
 
             <div class="grid md:grid-cols-2 gap-4">
-                <a href="{{ route('productos.index') }}" class="btn btn-info text-center py-4">👀 Ver Todos los Productos</a>
-                <a href="{{ route('productos.create') }}" class="btn btn-success text-center py-4">➕ Crear Nuevo Producto</a>
+                <a href="{{ route('login') }}" class="btn btn-info text-center py-4">Iniciar sesion</a>
+                <a href="{{ route('register') }}" class="btn btn-success text-center py-4">Registrarse</a>
             </div>
         </div>
 
@@ -69,29 +59,7 @@
             </div>
         </div>
 
-        <!-- Statistics Section -->
-        <div class="grid md:grid-cols-2 gap-6">
-            <!-- Total de Productos -->
-            <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-lg opacity-90">Total de Productos</p>
-                        <h3 class="text-4xl font-bold">{{ count($productos ?? []) }}</h3>
-                    </div>
-                    <div class="text-6xl opacity-20">📦</div>
-                </div>
-            </div>
 
-            <!-- Valor Total del Inventario -->
-            <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-lg opacity-90">Valor Total del Inventario</p>
-                        <h3 class="text-4xl font-bold">${{ number_format($productos?->sum('precio') ?? 0, 2) }}</h3>
-                    </div>
-                    <div class="text-6xl opacity-20">💰</div>
-                </div>
-            </div>
         </div>
     </main>
 

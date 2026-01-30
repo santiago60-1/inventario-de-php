@@ -3,80 +3,57 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Services\ProductService;
 use App\DTOs\ProductInputDto;
 use App\DTOs\ProductOutputDto;
 use App\Http\Requests\ProductRequest;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 
 class ProductController extends Controller
 {
+
+    use AuthorizesRequests;
+
     public function __construct(
         private ProductService $productService
     ) {}
 
     // =========================
-    // MOSTRAR TODOS LOS PRODUCTOS
+    // LISTAR PRODUCTOS
     // =========================
-public function index()
-{
-    $user = Auth::user();
+    public function index()
+    {
+        $this->authorize('viewAny', Producto::class);
 
-    $productosPaginados = $this->productService
-        ->getProductosForUser($user, 5);
+        $productos = $this->productService
+            ->getProductosForUser(auth()->user(), 5);
 
-    $productosDto = $productosPaginados
-        ->getCollection()
-        ->map(fn ($producto) => ProductOutputDto::fromModel($producto));
-
-    $productosPaginados->setCollection($productosDto);
-
-    return view('productos.index', [
-        'productos' => $productosPaginados
-    ]);
-}
-
-
+        return view('productos.index', compact('productos'));
+    }
 
 
     // =========================
-    // MOSTRAR FORMULARIO CREAR
+    // FORMULARIO CREAR
     // =========================
     public function create()
     {
+        $this->authorize('create', Producto::class);
+
         return view('productos.create');
     }
 
     // =========================
-    // MOSTRAR DETALLE DEL PRODUCTO
+    // GUARDAR PRODUCTO
     // =========================
-    public function show(int $id)
+    public function store(ProductRequest $request)
     {
-        $producto = $this->productService->getProductoById($id);
+        $this->authorize('create', Producto::class);
 
-        $productoDto = ProductOutputDto::fromModel($producto);
-
-        return view('productos.show', [
-            'producto' => $productoDto
-        ]);
-    }
-
-    // =========================
-    // GUARDAR PRODUCTO (CREATE)
-    // =========================
-    public function storeProducto(ProductRequest $request)
-    {
-
-
-        // DTO DE ENTRADA
         $inputDto = ProductInputDto::fromRequest($request);
-
-        $producto = $this->productService->storeProducto($inputDto);
-
-        // DTO DE SALIDA (por consistencia)
-        $productoDto = ProductOutputDto::fromModel($producto);
+        $this->productService->storeProducto($inputDto);
 
         return redirect()
             ->route('productos.index')
@@ -84,42 +61,43 @@ public function index()
     }
 
     // =========================
-    // MOSTRAR FORMULARIO EDITAR
+    // VER PRODUCTO
     // =========================
-    public function editarProducto(int $id)
+    public function show(int $id)
     {
-        $producto = $this->productService->getProductoById($id);
+        $producto = $this->findProducto($id);
 
-        $productoDto = ProductOutputDto::fromModel($producto);
+        $this->authorize('view', $producto);
+
+        return view('productos.show', [
+            'producto' => ProductOutputDto::fromModel($producto)
+        ]);
+    }
+
+    // =========================
+    // FORMULARIO EDITAR
+    // =========================
+    public function edit(int $id)
+    {
+        $producto = $this->findProducto($id);
+
+        $this->authorize('update', $producto);
 
         return view('productos.edit', [
-            'producto' => $productoDto
+            'producto' => ProductOutputDto::fromModel($producto)
         ]);
     }
 
     // =========================
-    // MOSTRAR FORMULARIO ACTUALIZAR (ALTERNATIVA)
+    // ACTUALIZAR PRODUCTO
     // =========================
-    public function update(int $id)
+    public function update(ProductRequest $request, int $id)
     {
-        $producto = $this->productService->getProductoById($id);
+        $producto = $this->findProducto($id);
 
-        $productoDto = ProductOutputDto::fromModel($producto);
+        $this->authorize('update', $producto);
 
-        return view('productos.formulario.actualizar', [
-            'producto' => $productoDto
-        ]);
-    }
-
-    // =========================
-    // ACTUALIZAR PRODUCTO (UPDATE)
-    // =========================
-    public function updateProducto(ProductRequest $request, int $id)
-    {
-
-        // DTO DE ENTRADA
         $inputDto = ProductInputDto::fromRequest($request);
-
         $this->productService->updateProducto($id, $inputDto);
 
         return redirect()
@@ -128,10 +106,14 @@ public function index()
     }
 
     // =========================
-    // ELIMINAR PRODUCTO (DELETE)
+    // ELIMINAR PRODUCTO
     // =========================
-    public function delete(int $id)
+    public function destroy(int $id)
     {
+        $producto = $this->findProducto($id);
+
+        $this->authorize('delete', $producto);
+
         $this->productService->delete($id);
 
         return redirect()
@@ -139,5 +121,11 @@ public function index()
             ->with('success', 'Producto eliminado exitosamente');
     }
 
-
+    // =========================
+    // MÉTODO PRIVADO REUTILIZABLE
+    // =========================
+    private function findProducto(int $id): Producto
+    {
+        return $this->productService->getProductoById($id);
+    }
 }

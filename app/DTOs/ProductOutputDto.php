@@ -11,7 +11,8 @@ class ProductOutputDto
         public string $nombre,
         public string $descripcion,
         public float $precio,
-        public int $cantidad
+        public int $cantidad,
+        public ?string $creado_por = null,
     ) {}
 
     public static function fromModel(Producto $producto): self
@@ -21,7 +22,8 @@ class ProductOutputDto
             nombre: $producto->nombre,
             descripcion: $producto->descripcion,
             precio: $producto->precio,
-            cantidad: $producto->cantidad
+            cantidad: $producto->cantidad,
+            creado_por: $producto->user?->name, // 👈 admin info
         );
     }
 }

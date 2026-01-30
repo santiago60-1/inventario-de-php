@@ -10,16 +10,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-// Landing / Home
-Route::get('/', [HomeController::class, 'welcome'])
-    ->name('home.index');
-
-
-/*
-|--------------------------------------------------------------------------
-| RUTAS PROTEGIDAS (JETSTREAM)
-|--------------------------------------------------------------------------
-*/
+Route::get('/', [HomeController::class, 'Welcome'])->name('Welcome');
 
 Route::middleware([
     'auth:sanctum',
@@ -27,7 +18,6 @@ Route::middleware([
     'verified',
 ])->group(function () {
 
-    // Dashboard
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
@@ -37,26 +27,11 @@ Route::middleware([
     | PRODUCTOS / INVENTARIO
     |--------------------------------------------------------------------------
     */
+    Route::resource('productos', ProductController::class)
+    ->parameters(['productos' => 'id']);
 
+    Route::view('/admin/roles', 'admin.roles')
+        ->middleware('can:isAdmin')
+        ->name('admin.roles');
+    });
 
-    Route::get('/productos', [ProductController::class, 'index'])
-        ->name('productos.index');
-
-    Route::get('/productos/crear', [ProductController::class, 'create'])
-        ->name('productos.create');
-
-    Route::post('/productos', [ProductController::class, 'storeProducto'])
-        ->name('productos.store');
-
-    Route::get('/productos/{id}/editar', [ProductController::class, 'editarProducto'])
-        ->name('productos.edit');
-
-    Route::put('/productos/{id}', [ProductController::class, 'updateProducto'])
-        ->name('productos.update');
-
-    Route::delete('/productos/{id}', [ProductController::class, 'delete'])
-        ->name('productos.destroy');
-
-    Route::get('/productos/{id}', [ProductController::class, 'show'])
-        ->name('productos.show');
-});
