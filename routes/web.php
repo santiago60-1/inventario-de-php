@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', [HomeController::class, 'Welcome'])->name('Welcome');
+Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
 
 Route::middleware([
     'auth:sanctum',

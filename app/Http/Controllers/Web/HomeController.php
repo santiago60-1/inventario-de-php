@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function Welcome () {
+    public function welcome()
+    {
         $productos = Producto::all();
         return view('welcome', compact('productos'));
     }

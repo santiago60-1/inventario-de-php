@@ -24,7 +24,7 @@
                 </div>
 
                 {{-- 👇 AQUÍ VA EL COMPONENTE --}}
-                @livewire('productos.productos-table')
+                <livewire:productos.productos-table />
 
             </div>
         </div>

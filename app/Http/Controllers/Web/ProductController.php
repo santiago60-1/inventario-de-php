@@ -10,6 +10,7 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Models\User;
 
 
 class ProductController extends Controller
@@ -24,7 +25,7 @@ class ProductController extends Controller
     // =========================
     // LISTAR PRODUCTOS
     // =========================
-    public function index()
+    public function index(User $user)
     {
         $this->authorize('viewAny', Producto::class);
 
