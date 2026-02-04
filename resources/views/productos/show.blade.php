@@ -31,6 +31,10 @@
                     <p class="text-gray-500 text-lg mt-2">
                         <span class="font-semibold">ID:</span> #{{ $producto->id }}
                     </p>
+                    <p class="text-gray-500 text-lg mt-2">
+                        <span class="font-semibold">Categoría:</span>
+                        {{ $producto->categoria_nombre ?? 'Sin categoría' }}
+                    </p>
                 </div>
 
                 <!-- Grid info -->
@@ -97,11 +101,13 @@
                           method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit"
-                                onclick="return confirm('¿Estás seguro de eliminar este producto?')"
-                                class="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition font-semibold flex items-center gap-2">
+                        <x-danger-button
+                            type="submit"
+                            onclick="return confirm('¿Estás seguro de eliminar este producto?')"
+                            class="flex items-center gap-2 rounded-lg bg-red-500 px-6 py-3 text-base font-semibold normal-case tracking-normal hover:bg-red-600"
+                        >
                             🗑️ Eliminar
-                        </button>
+                        </x-danger-button>
                     </form>
 
                     <a href="{{ route('productos.index') }}"

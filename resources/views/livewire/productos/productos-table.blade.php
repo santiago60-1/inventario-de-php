@@ -4,6 +4,7 @@
             <tr class="text-center text-gray-700 uppercase text-sm">
                 <th class="py-3 px-4">Nombre</th>
                 <th class="py-3 px-4">Descripción</th>
+                <th class="py-3 px-4">Categoría</th>
                 <th class="py-3 px-4">Precio</th>
                 <th class="py-3 px-4">Cantidad</th>
 
@@ -20,6 +21,9 @@
             <tr class="border-t hover:bg-gray-50 transition">
                 <td class="py-3 px-4 font-medium">{{ $producto->nombre }}</td>
                 <td class="py-3 px-4">{{ $producto->descripcion ?: '—' }}</td>
+                <td class="py-3 px-4">
+                    {{ $producto->categoria?->nombre ?? 'Sin categoría' }}
+                </td>
                 <td class="py-3 px-4">${{ number_format($producto->precio, 2) }}</td>
                 <td class="py-3 px-4">{{ $producto->cantidad }}</td>
 
@@ -52,10 +56,11 @@
                                   onsubmit="return confirm('¿Seguro que deseas eliminar este producto?')">
                                 @csrf
                                 @method('DELETE')
-                                <button
-                                    class="px-3 py-1 text-sm rounded-md bg-red-100 text-red-700 hover:bg-red-200 transition">
+                                <x-danger-button
+                                    type="submit"
+                                    class="px-3 py-1 text-sm rounded-md bg-red-100 text-red-700 normal-case tracking-normal hover:bg-red-200">
                                     Eliminar
-                                </button>
+                                </x-danger-button>
                             </form>
                         @endcan
 
@@ -64,7 +69,7 @@
             </tr>
         @empty
             <tr>
-                <td colspan="6" class="py-6 text-gray-500 text-center">
+                <td colspan="{{ auth()->user()->role === 'admin' ? 7 : 6 }}" class="py-6 text-gray-500 text-center">
                     No hay productos registrados.
                 </td>
             </tr>

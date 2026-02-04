@@ -8,6 +8,7 @@ use App\DTOs\ProductInputDto;
 use App\DTOs\ProductOutputDto;
 use App\Http\Requests\ProductRequest;
 use App\Models\Producto;
+use App\Models\Categoria;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Models\User;
@@ -43,7 +44,9 @@ class ProductController extends Controller
     {
         $this->authorize('create', Producto::class);
 
-        return view('productos.create');
+        $categorias = Categoria::orderBy('nombre')->get();
+
+        return view('productos.create', compact('categorias'));
     }
 
     // =========================
@@ -84,8 +87,11 @@ class ProductController extends Controller
 
         $this->authorize('update', $producto);
 
+        $categorias = Categoria::orderBy('nombre')->get();
+
         return view('productos.edit', [
-            'producto' => ProductOutputDto::fromModel($producto)
+            'producto' => ProductOutputDto::fromModel($producto),
+            'categorias' => $categorias,
         ]);
     }
 

@@ -19,6 +19,7 @@ class ProductRequest extends FormRequest
             'descripcion' => 'nullable|string',
             'precio' => 'required|numeric|min:0',
             'cantidad' => 'required|integer|min:0',
+            'categoria_id' => 'required|exists:categorias,id',
         ];
     }
 }

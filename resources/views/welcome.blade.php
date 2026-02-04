@@ -23,8 +23,18 @@
             <p class="text-lg text-gray-600 mb-8">Gestiona tus productos de forma eficiente y organizada con nuestro sistema moderno y fácil de usar.</p>
 
             <div class="grid md:grid-cols-2 gap-4">
-                <a href="{{ route('login') }}" class="btn btn-info text-center py-4">Iniciar sesion</a>
-                <a href="{{ route('register') }}" class="btn btn-success text-center py-4">Registrarse</a>
+                <a
+                    href="{{ route('login') }}"
+                    class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-6 py-4 text-center text-lg font-semibold text-white shadow-md transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                >
+                    Iniciar sesion
+                </a>
+                <a
+                    href="{{ route('register') }}"
+                    class="inline-flex items-center justify-center rounded-lg bg-emerald-600 px-6 py-4 text-center text-lg font-semibold text-white shadow-md transition hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                >
+                    Registrarse
+                </a>
             </div>
         </div>
 

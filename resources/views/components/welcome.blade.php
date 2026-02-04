@@ -1,9 +1,4 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            👋 Bienvenido, {{ auth()->user()->name }}
-        </h2>
-    </x-slot>
+
 
     {{-- ================= ADMIN ================= --}}
     @if(auth()->user()->role === 'admin')
@@ -39,9 +34,22 @@
                     Controla roles y permisos.
                 </p>
 
-                <a href="{{ route('admin.roles') }}"
+                <a href="{{ route('profile.show') }}"
                    class="mt-4 inline-block text-indigo-600 font-semibold">
                     Administrar usuarios →
+                </a>
+            </div>
+
+            {{-- Categorías --}}
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold">🗂️ Categorías</h2>
+                <p class="mt-2 text-sm text-gray-500">
+                    Organiza los productos por categoría.
+                </p>
+
+                <a href="{{ route('categorias.index') }}"
+                   class="mt-4 inline-block text-indigo-600 font-semibold">
+                    Gestionar categorías →
                 </a>
             </div>
         </div>
@@ -89,4 +97,3 @@
 
         </div>
     @endif
-</x-app-layout>

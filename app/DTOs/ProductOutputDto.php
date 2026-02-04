@@ -12,6 +12,8 @@ class ProductOutputDto
         public string $descripcion,
         public float $precio,
         public int $cantidad,
+        public ?int $categoria_id = null,
+        public ?string $categoria_nombre = null,
         public ?string $creado_por = null,
     ) {}
 
@@ -23,6 +25,8 @@ class ProductOutputDto
             descripcion: $producto->descripcion,
             precio: $producto->precio,
             cantidad: $producto->cantidad,
+            categoria_id: $producto->categoria_id,
+            categoria_nombre: $producto->categoria?->nombre,
             creado_por: $producto->user?->name, // 👈 admin info
         );
     }

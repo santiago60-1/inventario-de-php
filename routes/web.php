@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\HomeController;
+use App\Http\Controllers\Web\CategoriaController;
 use App\Http\Controllers\Web\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,8 +31,10 @@ Route::middleware([
     Route::resource('productos', ProductController::class)
     ->parameters(['productos' => 'id']);
 
+    Route::resource('categorias', CategoriaController::class)
+        ->except(['show']);
+
     Route::view('/admin/roles', 'admin.roles')
         ->middleware('can:isAdmin')
         ->name('admin.roles');
     });
-

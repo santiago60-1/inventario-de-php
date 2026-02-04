@@ -13,7 +13,7 @@ class ProductService
     public function getProductosForUser($user, int $perPage = 10)
     {
         $query = Producto::query()
-            ->with('user') // 👈 para que el admin vea quién creó el producto
+            ->with(['user', 'categoria']) // 👈 para mostrar creador y categoría
             ->latest();
 
         // SOLO el admin ve todo
@@ -31,7 +31,7 @@ class ProductService
      */
     public function getProductoById(int $id): Producto
     {
-        return Producto::findOrFail($id);
+        return Producto::with(['user', 'categoria'])->findOrFail($id);
     }
 
     /**
@@ -44,6 +44,7 @@ class ProductService
             'descripcion' => $dto->descripcion,
             'precio'      => $dto->precio,
             'cantidad'    => $dto->cantidad,
+            'categoria_id'=> $dto->categoria_id,
             'user_id'     => auth()->id(), // 🔐 ownership
         ]);
     }
@@ -60,6 +61,7 @@ class ProductService
             'descripcion' => $dto->descripcion,
             'precio'      => $dto->precio,
             'cantidad'    => $dto->cantidad,
+            'categoria_id'=> $dto->categoria_id,
         ]);
 
         return $producto;
