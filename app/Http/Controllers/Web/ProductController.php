@@ -12,6 +12,7 @@ use App\Models\Categoria;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Models\User;
+use Illuminate\Support\Arr;
 
 
 class ProductController extends Controller
@@ -57,7 +58,8 @@ class ProductController extends Controller
         $this->authorize('create', Producto::class);
 
         $inputDto = ProductInputDto::fromRequest($request);
-        $this->productService->storeProducto($inputDto);
+        $fotos = Arr::wrap($request->file('fotos'));
+        $this->productService->storeProducto($inputDto, $fotos);
 
         return redirect()
             ->route('productos.index')
@@ -105,7 +107,8 @@ class ProductController extends Controller
         $this->authorize('update', $producto);
 
         $inputDto = ProductInputDto::fromRequest($request);
-        $this->productService->updateProducto($id, $inputDto);
+        $fotos = Arr::wrap($request->file('fotos'));
+        $this->productService->updateProducto($id, $inputDto, $fotos);
 
         return redirect()
             ->route('productos.index')

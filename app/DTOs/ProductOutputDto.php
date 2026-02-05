@@ -15,6 +15,7 @@ class ProductOutputDto
         public ?int $categoria_id = null,
         public ?string $categoria_nombre = null,
         public ?string $creado_por = null,
+        public array $fotos = [],
     ) {}
 
     public static function fromModel(Producto $producto): self
@@ -28,6 +29,7 @@ class ProductOutputDto
             categoria_id: $producto->categoria_id,
             categoria_nombre: $producto->categoria?->nombre,
             creado_por: $producto->user?->name, // 👈 admin info
+            fotos: $producto->fotos ?? [],
         );
     }
 }

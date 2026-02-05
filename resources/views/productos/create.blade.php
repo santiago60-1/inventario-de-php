@@ -15,6 +15,7 @@
 
                 <form action="{{ route('productos.store') }}"
                       method="POST"
+                      enctype="multipart/form-data"
                       class="space-y-6">
                     @csrf
 
@@ -95,6 +96,22 @@
                             class="mt-1 block w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
                         />
                         <x-input-error for="cantidad" class="mt-1 text-red-500" />
+                    </div>
+
+                    <!-- Fotos -->
+                    <div>
+                        <x-label for="fotos" value="Fotos del producto" class="mb-1 text-base font-semibold text-gray-800" />
+                        <input
+                            id="fotos"
+                            name="fotos[]"
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            class="mt-1 block w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
+                        />
+                        <p class="mt-1 text-sm text-gray-500">Puedes subir varias imágenes (jpg, png o webp).</p>
+                        <x-input-error for="fotos" class="mt-1 text-red-500" />
+                        <x-input-error for="fotos.*" class="mt-1 text-red-500" />
                     </div>
 
                     <!-- Botones -->

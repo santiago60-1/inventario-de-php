@@ -72,6 +72,46 @@
                     </div>
                 </div>
 
+                <!-- Fotos -->
+                <div class="mb-8 border-t-2 border-gray-200 pt-8">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">
+                        📷 Fotos del producto
+                    </h3>
+
+                    @php($fotos = $producto->fotos ?? [])
+                    @if (count($fotos) > 0)
+                        <div class="space-y-4">
+                            <div class="overflow-hidden rounded-2xl border border-gray-200 bg-gray-50">
+                                <img
+                                    src="{{ asset('storage/' . $fotos[0]) }}"
+                                    alt="Foto principal de {{ $producto->nombre }}"
+                                    class="w-full h-64 sm:h-80 md:h-96 object-cover"
+                                    loading="lazy"
+                                />
+                            </div>
+
+                            @if (count($fotos) > 1)
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                    @foreach (array_slice($fotos, 1) as $foto)
+                                        <div class="overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
+                                            <img
+                                                src="{{ asset('storage/' . $foto) }}"
+                                                alt="Foto de {{ $producto->nombre }}"
+                                                class="w-full h-28 sm:h-36 md:h-44 object-cover"
+                                                loading="lazy"
+                                            />
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+                    @else
+                        <p class="text-gray-500 italic text-lg">
+                            No hay fotos disponibles para este producto.
+                        </p>
+                    @endif
+                </div>
+
                 <!-- Descripción -->
                 <div class="mb-8 border-t-2 border-gray-200 pt-8">
                     <h3 class="text-2xl font-bold text-slate-800 mb-4">

@@ -2,6 +2,7 @@
     <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden">
         <thead class="bg-gray-100">
             <tr class="text-center text-gray-700 uppercase text-sm">
+                <th class="py-3 px-4">Fotos</th>
                 <th class="py-3 px-4">Nombre</th>
                 <th class="py-3 px-4">Descripción</th>
                 <th class="py-3 px-4">Categoría</th>
@@ -19,6 +20,23 @@
         <tbody class="text-center text-gray-700">
         @forelse($productos as $producto)
             <tr class="border-t hover:bg-gray-50 transition">
+                <td class="py-3 px-4">
+                    @php($fotos = $producto->fotos ?? [])
+                    @if(count($fotos) > 0)
+                        <div class="flex items-center justify-center gap-2">
+                            <img
+                                src="{{ asset('storage/' . $fotos[0]) }}"
+                                alt="Foto de {{ $producto->nombre }}"
+                                class="size-12 rounded-lg object-cover border border-gray-200"
+                            />
+                            @if(count($fotos) > 1)
+                                <span class="text-xs text-gray-500">+{{ count($fotos) - 1 }}</span>
+                            @endif
+                        </div>
+                    @else
+                        <span class="text-gray-400">—</span>
+                    @endif
+                </td>
                 <td class="py-3 px-4 font-medium">{{ $producto->nombre }}</td>
                 <td class="py-3 px-4">{{ $producto->descripcion ?: '—' }}</td>
                 <td class="py-3 px-4">
@@ -69,7 +87,7 @@
             </tr>
         @empty
             <tr>
-                <td colspan="{{ auth()->user()->role === 'admin' ? 7 : 6 }}" class="py-6 text-gray-500 text-center">
+                <td colspan="{{ auth()->user()->role === 'admin' ? 8 : 7 }}" class="py-6 text-gray-500 text-center">
                     No hay productos registrados.
                 </td>
             </tr>

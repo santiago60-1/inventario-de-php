@@ -73,10 +73,6 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-slate-800 text-white text-center py-6 mt-12">
-        <p class="mb-2">&copy; 2026 Sistema de Inventario - Todos los derechos reservados</p>
-        <p class="text-sm text-gray-400">Desarrollado con Laravel y Tailwind CSS</p>
-    </footer>
+    <x-app-footer />
 </body>
 </html>
