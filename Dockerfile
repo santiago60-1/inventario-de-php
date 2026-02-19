@@ -5,7 +5,8 @@ WORKDIR /app
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --prefer-dist --no-interaction --no-progress --no-scripts
 COPY . .
-RUN composer dump-autoload --optimize \
+RUN mkdir -p storage/framework/cache storage/framework/views storage/framework/sessions bootstrap/cache \
+    && composer dump-autoload --optimize --no-scripts \
     && php artisan package:discover --ansi
 
 FROM node:20 AS frontend
