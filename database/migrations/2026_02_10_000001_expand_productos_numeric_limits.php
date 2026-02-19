@@ -8,31 +8,23 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-        */
+     */
     public function up(): void
     {
         Schema::table('productos_tabla', function (Blueprint $table) {
-
-            // Por si existe una FK mal creada
-            try {
-                $table->dropForeign(['user_id']);
-            } catch (\Throwable $e) {
-                // no pasa nada si no existe
-            }
-
-            // Crear la FK correcta
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->cascadeOnDelete();
+            $table->decimal('precio', 15, 2)->change();
+            $table->unsignedBigInteger('cantidad')->change();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::table('productos_tabla', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
+            $table->decimal('precio', 8, 2)->change();
+            $table->integer('cantidad')->change();
         });
     }
-
 };

@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('nombre');
-            $table->text('descripcion');
+            $table->text('descripcion')->nullable();
             $table->decimal('precio', 8, 2);
             $table->integer('cantidad');
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->cascadeOnDelete();
         });
     }
 

@@ -9,7 +9,7 @@ class ProductOutputDto
     public function __construct(
         public int $id,
         public string $nombre,
-        public string $descripcion,
+        public ?string $descripcion,
         public float $precio,
         public int $cantidad,
         public ?int $categoria_id = null,

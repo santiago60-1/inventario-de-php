@@ -5,11 +5,11 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white shadow-xl rounded-2xl p-8">
+    <div class="py-6 sm:py-12">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white shadow-xl rounded-2xl p-4 sm:p-8">
 
-                <h1 class="text-3xl font-bold mb-8 text-gray-800 border-b pb-4">
+                <h1 class="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-gray-800 border-b pb-4">
                     🗂️ Nueva categoría
                 </h1>
 
@@ -42,13 +42,13 @@
                         <x-input-error for="descripcion" class="mt-1 text-red-500" />
                     </div>
 
-                    <div class="flex gap-4 pt-6">
-                        <x-button class="flex-1 justify-center rounded-lg bg-green-600 py-3 text-base font-semibold normal-case tracking-normal hover:bg-green-700 focus:ring-green-500">
+                    <div class="flex flex-col sm:flex-row gap-4 pt-6">
+                        <x-button class="w-full sm:flex-1 justify-center rounded-lg bg-green-600 py-3 text-base font-semibold normal-case tracking-normal hover:bg-green-700 focus:ring-green-500">
                             ✅ Guardar
                         </x-button>
 
                         <a href="{{ route('categorias.index') }}"
-                           class="flex-1 rounded-lg bg-gray-500 py-3 text-center text-base font-semibold text-white transition hover:bg-gray-600">
+                           class="w-full sm:flex-1 rounded-lg bg-gray-500 py-3 text-center text-base font-semibold text-white transition hover:bg-gray-600">
                             ❌ Cancelar
                         </a>
                     </div>
