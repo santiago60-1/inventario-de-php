@@ -1,7 +1,14 @@
 # syntax=docker/dockerfile:1
 
-FROM composer:2 AS vendor
+FROM php:8.4-cli AS vendor
 WORKDIR /app
+RUN apt-get update && apt-get install -y \
+        git \
+        unzip \
+        libzip-dev \
+    && docker-php-ext-install zip \
+    && rm -rf /var/lib/apt/lists/*
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --prefer-dist --no-interaction --no-progress --no-scripts
 COPY . .
@@ -17,7 +24,7 @@ COPY resources resources
 COPY vite.config.js tailwind.config.js postcss.config.js postcss.config.cjs ./
 RUN npm run build
 
-FROM php:8.2-apache AS app
+FROM php:8.4-apache AS app
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
 RUN apt-get update && apt-get install -y \
